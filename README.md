@@ -6,4 +6,4 @@ i am jrery and i will guide you through the installation of this very good bot
 
 if you're on gnu/linux or macOS, you can just run install.sh (you need git, python3, and python3-pip installed)
 
-if you're on windows, **tja**
+if you're on windows, **tja** ([https://github.com/Jerrynicki/jrery-bot/issues/1](https://github.com/Jerrynicki/jrery-bot/issues/1))
