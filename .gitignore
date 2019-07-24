@@ -4,6 +4,7 @@ strassen_osm.txt
 sync_to_raspi.sh
 workspace.code-workspace
 log.txt
+config.json
 user_data/*
 cache/
 __pycache__

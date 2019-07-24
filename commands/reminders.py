@@ -21,6 +21,12 @@ class Reminders(commands.Cog):
             self.reminders = list()
         self.reminders_changed = False
 
+        try:
+            self.reminders_blocklist = pickle.load(open("user_data/reminders_blocklist.pickle", "rb"))
+        except FileNotFoundError:
+            self.reminders_blocklist = dict()
+        self.reminders_blocklist_changed = False
+
         bot.loop.create_task(self.reminders_autoflush())
         bot.loop.create_task(self.reminders_remind())
 
@@ -31,6 +37,10 @@ class Reminders(commands.Cog):
             if self.reminders_changed:
                 pickle.dump(self.reminders, open("user_data/reminders.pickle", "wb"))
                 self.reminders_changed = False
+
+            if self.reminders_blocklist_changed:
+                pickle.dump(self.reminders_blocklist, open("user_data/reminders_blocklist.pickle", "wb"))
+                self.reminders_blocklist_changed = False
 
     async def reminders_remind(self):
         while True:
@@ -54,7 +64,7 @@ class Reminders(commands.Cog):
                     pass
 
     def add_reminder(self, user, timestamp, text):
-        self.reminders.append([user, timestamp, text]) # TODO: Make a Reminder class for better readability
+        self.reminders.append([user, timestamp, text])
         self.reminders_changed = True
 
     def get_reminders(self, user):
@@ -71,7 +81,16 @@ class Reminders(commands.Cog):
         return reminders_list
 
     @commands.command()
-    async def remind(self, ctx, time, *message):
+    async def remind(self, ctx, time, *message): # TODO: Rewrite this command as a command group, so it's less cluttered
+        """The remind command can remind you or another user of something. Usage:
+
+        remind [time] [message] will set a reminder for yourself
+        remind [@user] [time] [message] will set a reminder for another user
+        remind list will send a message with a list of set reminders
+        remind list [@user] will send a message with a list of set reminders for the mentioned user
+        remind blocklist will send a message with a list of blocked users (who can't set reminders for you)
+        remind blocklist add [@user] will add a user to your blocklist
+        remind blocklist remove [@user] will remove a user from your blocklist"""
         message = " ".join(message)
 
         if time == "list":
@@ -94,6 +113,45 @@ class Reminders(commands.Cog):
                 i += 1
 
             await ctx.send(message[:-1])
+
+        elif time == "blocklist":
+            if len(ctx.message.mentions) > 0:
+                message = message.split(" ")
+
+                user = ctx.message.mentions[0]
+
+                if ctx.message.author.id not in self.reminders_blocklist:
+                    self.reminders_blocklist[ctx.message.author.id] = list()
+                
+                if message[0] == "add":
+                    self.reminders_blocklist[ctx.message.author.id].append(user.id)
+                    self.reminders_blocklist_changed = True
+                    await ctx.send("Added **" + user.name + "** to your blocklist!")
+
+                elif message[0] == "remove":
+                    try:
+                        self.reminders_blocklist[ctx.message.author.id].remove(user.id)
+                        self.reminders_blocklist_changed = True
+                        await ctx.send("Removed **" + user.name + "** from your blocklist!")
+                    except ValueError:
+                        await ctx.send("**" + user.name + "** was not found in your blocklist!")
+
+            else:
+                if ctx.message.author.id not in self.reminders_blocklist or len(self.reminders_blocklist[ctx.message.author.id]) == 0:
+                    await ctx.send("**You haven't blocked anyone!**")
+                    return
+
+                message = "**Reminders blocklist:**\n"
+                for blocked in self.reminders_blocklist[ctx.message.author.id]:
+                    user = self.bot.get_user(blocked)
+                    if user == None:
+                        username = "[Username not available]"
+                    else:
+                        username = user.name
+                    message += "**" + username + "** (" + str(blocked) + ")\n"
+
+                await ctx.send(message)
+
         else:
             if len(ctx.message.mentions) > 0 and time.startswith("<@"):
                 user = ctx.message.mentions[0]
@@ -111,6 +169,11 @@ class Reminders(commands.Cog):
                 return
 
             timestamp = int(util.time_calc.timestamp_in(time))
+
+            if user.id in self.reminders_blocklist and ctx.message.author.id in self.reminders_blocklist[user.id]:
+                await ctx.send("This user has blocked you from creating reminders for them!")
+                return
+
             self.add_reminder(user.id, timestamp, message)
 
             if offset_args:
