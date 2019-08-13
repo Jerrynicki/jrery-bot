@@ -36,7 +36,8 @@ bot.add_cog(commands.music.Music(bot, timeouts, generic_responses))
 bot.add_cog(commands.reminders.Reminders(bot, timeouts, generic_responses))
 bot.add_cog(commands.streets.Streets(bot, timeouts, generic_responses))
 bot.add_cog(commands.update.Update(bot, timeouts, generic_responses))
-
+bot.add_cog(commands.ffmpeg.FFmpeg(bot, timeouts, generic_responses))
+bot.add_cog(commands.execute.Exec(bot, timeouts, generic_responses))
 while True:
     print("Starting event loop...")
     asyncio.get_event_loop().run_until_complete(bot.start(config["token"]))
