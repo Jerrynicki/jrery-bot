@@ -15,7 +15,7 @@ class OnMessageEvent(commands.Cog):
                 if emote.name == "trogi":
                     trogi_emote = emote
 
-            if trogi_emote = None:
+            if trogi_emote == None:
                 return
 
             await message.channel.send("<:" + trogi_emote.name + ":" + str(trogi_emote.id) + ">")
