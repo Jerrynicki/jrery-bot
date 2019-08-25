@@ -8,11 +8,11 @@ class Exec(commands.Cog):
         self.generic_responses = generic_responses
 
     @commands.command()
-    async def execute(self, ctx, *stuff):
+    async def ihwell(self, ctx, *stuff):
         if ctx.message.author.id != self.bot.owner_id:
             await ctx.send("lol no")
             return
 
         stuff = " ".join(stuff)
 
-        exec(stuff)
+        eval(stuff)
