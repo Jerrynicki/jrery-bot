@@ -16,8 +16,11 @@ class FFmpeg(commands.Cog):
         """Execute an FFmpeg command and send the resulting file
         Special syntax: instead of giving the filename as the last argument, you should give just the file extension; instead of giving a -i argument, you should give a link to a file as the first argument"""
 
-        await ctx.send("ne is jetz disabled bis ich cooldown und größenbegrenzung machen weil ihr euch ja nicht wie normale menschen verhalten könnt")
-        return
+        if self.timeouts.is_timeout(ctx.message.channel.id, "ffmpeg"):
+            await ctx.send(self.generic_responses["timeout"])
+            return
+
+        self.timeouts.add_timeout(ctx.message.channel.id, "ffmpeg", 15)
 
         if "-i" in command:
             await ctx.send("Sorry, but the -i option is disabled for security reasons.")
