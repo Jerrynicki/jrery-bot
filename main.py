@@ -28,6 +28,7 @@ bot.owner_id = int(config["owner_id"])
 bot.is_debug = False
 
 bot.add_cog(events.update_uptime.UpdateUptime(bot))
+bot.add_cog(events.on_message.OnMessageEvent(bot))
 
 bot.add_cog(commands.generic.Generic(bot, timeouts, generic_responses))
 bot.add_cog(commands.inspirobot.Inspirobot(bot, timeouts, generic_responses))
