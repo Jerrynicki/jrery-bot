@@ -15,4 +15,4 @@ class Exec(commands.Cog):
 
         stuff = " ".join(stuff)
 
-        eval(stuff)
+        await ctx.send(eval(stuff))
