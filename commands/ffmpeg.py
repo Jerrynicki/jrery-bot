@@ -32,9 +32,15 @@ class FFmpeg(commands.Cog):
         filename2 = "cache/" + \
             str(ctx.message.channel.id) + "_ffmpeg." + command[-1]
 
+        filesize = 0
         with open(filename1, "wb") as file:
             for buffer in response.iter_content(chunk_size=2048):
                 file.write(buffer)
+
+            filesize += 2048
+            if filesize > 16*1024*1024:
+                await ctx.send("fick dich roesch maximal 16 mb ok")
+                return
 
         proc_command = ["ffmpeg"]
         proc_command.extend(["-i", filename1])
