@@ -8,7 +8,7 @@ class OnMessageEvent(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if random.randint(1, 300) == 150:
+        if random.randint(1, 1500) == 750:
             trogi_emote = None
             for emote in message.guild.emojis:
                 print(emote.name)
