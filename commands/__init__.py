@@ -7,3 +7,4 @@ from . import streets
 from . import update
 from . import ffmpeg
 from . import execute
+from . import webcam
