@@ -37,7 +37,9 @@ class Minecraft(commands.Cog):
             for player in zip(status.players.sample, range(5)):
                 players += player[0].name + "\n"
 
-            if len(status.players.sample) > 5:
+            if len(status.players.sample) == 5:
+                players += status.players.sample[-1].name
+            else if len(status.players.sample) > 5:
                 players += "+ " + str(status.players.online - 5) + " more players"
 
         embed.add_field(name="Server version", value=status.version.name, inline=False)
