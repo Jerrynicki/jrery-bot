@@ -37,7 +37,7 @@ class Minecraft(commands.Cog):
             for player in zip(status.players.sample, range(5)):
                 players += player[0].name + "\n"
 
-            if len(status.players.sample) == 5:
+            if len(status.players.sample) == 6:
                 players += status.players.sample[-1].name
             elif len(status.players.sample) > 5:
                 players += "+ " + str(status.players.online - 5) + " more players"
