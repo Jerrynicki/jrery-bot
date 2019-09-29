@@ -39,7 +39,7 @@ class Minecraft(commands.Cog):
 
             if len(status.players.sample) == 5:
                 players += status.players.sample[-1].name
-            else if len(status.players.sample) > 5:
+            elif len(status.players.sample) > 5:
                 players += "+ " + str(status.players.online - 5) + " more players"
 
         embed.add_field(name="Server version", value=status.version.name, inline=False)
