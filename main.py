@@ -40,6 +40,7 @@ bot.add_cog(commands.update.Update(bot, timeouts, generic_responses))
 bot.add_cog(commands.ffmpeg.FFmpeg(bot, timeouts, generic_responses))
 bot.add_cog(commands.execute.Exec(bot, timeouts, generic_responses))
 bot.add_cog(commands.webcam.Webcam(bot, timeouts, generic_responses))
+bot.add_cog(commands.screenshot.Screenshot(bot, timeouts, generic_responses))
 bot.add_cog(commands.minecraft.Minecraft(bot, timeouts, generic_responses))
 
 while True:
