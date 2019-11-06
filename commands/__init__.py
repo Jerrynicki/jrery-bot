@@ -10,4 +10,4 @@ from . import execute
 from . import webcam
 from . import screenshot
 from . import minecraft
-
+from . import decide
