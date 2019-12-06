@@ -23,9 +23,10 @@ else:
 
 timeouts = touts.Timeouts()
 
-bot = discord.ext.commands.Bot(command_prefix="jer!", description="hello ladies")
+bot = discord.ext.commands.Bot(
+    command_prefix="jer!", description="hello ladies")
 bot.owner_id = config["owner_id"]
-bot.is_debug = True
+bot.is_debug = False 
 
 bot.add_cog(events.update_uptime.UpdateUptime(bot))
 
@@ -35,6 +36,14 @@ bot.add_cog(commands.neofetch.Neofetch(bot, timeouts, generic_responses))
 bot.add_cog(commands.music.Music(bot, timeouts, generic_responses))
 bot.add_cog(commands.reminders.Reminders(bot, timeouts, generic_responses))
 bot.add_cog(commands.streets.Streets(bot, timeouts, generic_responses))
+
+try:
+    bot.last_up = int(open("uptime", "r").read())
+    bot.loop.create_task(events.update_uptime.SaveUptime(bot).announce_last_uptime(bot.last_up))
+except:
+    bot.last_up = 0
+
+bot.loop.create_task(events.update_uptime.SaveUptime(bot).save_uptime())
 
 while True:
     print("Starting event loop...")
