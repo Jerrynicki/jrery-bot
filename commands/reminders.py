@@ -107,7 +107,7 @@ class Reminders(commands.Cog):
 
             current_time = int(time_module.time())
             i = 0
-            message = "**Reminders for " + user.name + "**\n"
+            message = "**Due to me messing something up with the bot, all reminders set before 2019-12-09 have been lost. Sorry doods**\n**Reminders for " + user.name + "**\n"
             for reminder in reminders_list:
                 message += "**[" + str(i) + "]**" + " in " + util.time_calc.time_period_human_readable(reminder[0] - current_time) + " `" + reminder[1] + "`\n"
                 i += 1
