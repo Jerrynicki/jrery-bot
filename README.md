@@ -10,6 +10,6 @@ if you're on windows, **tja** ([https://github.com/Jerrynicki/jrery-bot/issues/1
 
 two public instances of this bot are hosted on my raspberry:
 
-* jrery bot master: https://discordapp.com/api/oauth2/authorize?client\_id=561911182211022874&permissions=37080128&scope=bot
+* jrery bot master: https://discordapp.com/api/oauth2/authorize?client_id=561911182211022874&permissions=37080128&scope=bot
 
-* jrery bot testing: https://discordapp.com/api/oauth2/authorize?client\_id=653622183867842560&permissions=37080128&scope=bot
+* jrery bot testing: https://discordapp.com/api/oauth2/authorize?client_id=653622183867842560&permissions=37080128&scope=bot
