@@ -11,3 +11,4 @@ from . import webcam
 from . import screenshot
 from . import minecraft
 from . import decide
+from . import version
