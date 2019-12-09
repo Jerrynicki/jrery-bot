@@ -24,7 +24,7 @@ else:
 timeouts = touts.Timeouts()
 
 bot = discord.ext.commands.Bot(
-    command_prefix="jer!", description="hello ladies")
+    command_prefix=config["prefix"], description="hello ladies")
 bot.owner_id = config["owner_id"]
 bot.is_debug = False 
 

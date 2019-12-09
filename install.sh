@@ -12,5 +12,7 @@ read -p "Please download https://www.datendieter.de/item/Liste_von_deutschen_Str
 read -sp "Please input your bot token: " token
 echo ""
 read -p "Please input you discord user ID: " uid
+echo ""
+read -p "Please input the desired bot prefix: " prefix
 
-echo '{"token": "'$token'", "owner_id": "'$uid'"}' > config.json
+echo '{"token": "'$token'", "owner_id": '$uid', "prefix": "'$prefix'"}' > config.json
