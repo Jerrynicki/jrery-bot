@@ -29,6 +29,7 @@ bot.owner_id = config["owner_id"]
 bot.is_debug = False 
 
 bot.add_cog(events.update_uptime.UpdateUptime(bot))
+bot.add_cog(events.on_message.OnMessageEvent(bot))
 
 bot.add_cog(commands.generic.Generic(bot, timeouts, generic_responses))
 bot.add_cog(commands.inspirobot.Inspirobot(bot, timeouts, generic_responses))
@@ -36,6 +37,13 @@ bot.add_cog(commands.neofetch.Neofetch(bot, timeouts, generic_responses))
 bot.add_cog(commands.music.Music(bot, timeouts, generic_responses))
 bot.add_cog(commands.reminders.Reminders(bot, timeouts, generic_responses))
 bot.add_cog(commands.streets.Streets(bot, timeouts, generic_responses))
+bot.add_cog(commands.update.Update(bot, timeouts, generic_responses))
+bot.add_cog(commands.ffmpeg.FFmpeg(bot, timeouts, generic_responses))
+bot.add_cog(commands.execute.Exec(bot, timeouts, generic_responses))
+bot.add_cog(commands.webcam.Webcam(bot, timeouts, generic_responses))
+bot.add_cog(commands.screenshot.Screenshot(bot, timeouts, generic_responses))
+bot.add_cog(commands.minecraft.Minecraft(bot, timeouts, generic_responses))
+bot.add_cog(commands.decide.Decide(bot, timeouts, generic_responses))
 
 try:
     bot.last_up = int(open("uptime", "r").read())
