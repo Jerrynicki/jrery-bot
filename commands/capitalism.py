@@ -36,9 +36,11 @@ class Capitalism(commands.Cog):
         while True:
             await asyncio.sleep(20)
 
-            if self.stocks_changed:
-                pickle.dump(self.data, open("user_data/stocks.pickle", "wb"))
-                self.stocks_changed = False
+            #if self.stocks_changed:
+            #    pickle.dump(self.data, open("user_data/stocks.pickle", "wb"))
+            #    self.stocks_changed = False
+            # TODO: Make this work with the stocks_changed variable
+            pickle.dump(self.data, open("user_data/stocks.pickle", "wb"))
 
     async def update_stocks(self):
         while True:
