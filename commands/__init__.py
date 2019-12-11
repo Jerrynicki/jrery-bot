@@ -12,3 +12,4 @@ from . import screenshot
 from . import minecraft
 from . import decide
 from . import version
+from . import capitalism

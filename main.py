@@ -45,6 +45,7 @@ bot.add_cog(commands.screenshot.Screenshot(bot, timeouts, generic_responses))
 bot.add_cog(commands.minecraft.Minecraft(bot, timeouts, generic_responses))
 bot.add_cog(commands.decide.Decide(bot, timeouts, generic_responses))
 bot.add_cog(commands.version.Version(bot, timeouts, generic_responses))
+bot.add_cog(commands.capitalism.Capitalism(bot, timeouts, generic_responses))
 
 try:
     bot.last_up = int(open("uptime", "r").read())
