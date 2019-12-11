@@ -45,6 +45,8 @@ class Capitalism(commands.Cog):
             await asyncio.sleep(120)
             for stock in self.data.stocks:
                 stock["value"] += stock["value"] * (random.randint(-100, 100) / 100 / 100)
+                if stock["value"] < 0.05:
+                    stock["value"] = 0.05
             self.stocks_changed = True
 
     @commands.command()
