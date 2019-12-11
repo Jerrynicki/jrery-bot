@@ -160,7 +160,7 @@ class Capitalism(commands.Cog):
 
         jrery_dollars = amount / self.data.stocks[stock_index]["value"]
 
-        if self.data.money[ctx.message.author.id] < amount:
+        if self.data.money[ctx.message.author.id] < jrery_dollars:
             await ctx.send("You don't have that many jrery dollars!")
             return
 
