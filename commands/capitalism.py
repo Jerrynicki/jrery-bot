@@ -149,7 +149,9 @@ class Capitalism(commands.Cog):
             return
 
         if amount == "all":
-            amount = self.data.money[ctx.message.author.id]
+            # geht das überhaupt ist mir auch egal keinen bock mehr
+            # macht der jerry von morgen dann
+            amount = self.data.stocks[stock_index]["value"] / self.data.money[ctx.message.author.id]
         else:
             try:
                 amount = float(amount)
@@ -160,7 +162,9 @@ class Capitalism(commands.Cog):
 
         jrery_dollars = amount / self.data.stocks[stock_index]["value"]
 
-        if ctx.message.author.id not in self.data.money or self.data.money[ctx.message.author.id] < jrery_dollars:
+        # if ctx.message.author.id not in self.data.money or self.data.money[ctx.message.author.id] < jrery_dollars:
+        # not working fixing this tomorrow aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        if self.data.money[ctx.message.author.id] < jrery_dollars:
             await ctx.send("You don't have that many jrery dollars!")
             return
 
