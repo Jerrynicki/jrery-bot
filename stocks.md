@@ -34,7 +34,7 @@ Subcommands and explanations:
 
 * Use `all` for amount to cash out all of your investments on the stock
 
-* Example: `jer!stocks cash-out jrery 50` will give you 100 jrery dollars if the value of `jrery` is 2.00 at the time of cashing out
+* Example: `jer!stocks cashout jrery 50` will give you 100 jrery dollars if the value of `jrery` is 2.00 at the time of cashing out
 
 **daily**
 
@@ -50,4 +50,4 @@ Subcommands and explanations:
 
 * Gives you a personalized list, showing all the stocks you have invested in, their current value, how many you have and how much they are worth currently
 
-The value of each currency is increased or decreased between -1 to 1 percent (with 2 decimal points) randomly every 2 minutes
+The value of each currency is increased or decreased between -3 to 3 percent (with 2 decimal points) randomly every 2 minutes

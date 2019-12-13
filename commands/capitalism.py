@@ -46,7 +46,7 @@ class Capitalism(commands.Cog):
         while True:
             await asyncio.sleep(120)
             for stock in self.data.stocks:
-                stock["value"] += stock["value"] * (random.randint(-100, 100) / 100 / 100)
+                stock["value"] += stock["value"] * (random.randint(-100, 100) / 100 / 100) * 3
                 if stock["value"] < 0.05:
                     stock["value"] = 0.05
             self.stocks_changed = True
@@ -151,7 +151,7 @@ class Capitalism(commands.Cog):
         if amount == "all":
             # geht das überhaupt ist mir auch egal keinen bock mehr
             # macht der jerry von morgen dann
-            amount = self.data.stocks[stock_index]["value"] / self.data.money[ctx.message.author.id]
+            amount = self.data.money[ctx.message.author.id] / self.data.stocks[stock_index]["value"] 
         else:
             try:
                 amount = float(amount)
@@ -160,7 +160,7 @@ class Capitalism(commands.Cog):
             except:
                 await ctx.send("Amount is not a valid number! (Try using . instead of , as a decimal point)")
 
-        jrery_dollars = amount / self.data.stocks[stock_index]["value"]
+        jrery_dollars = amount * self.data.stocks[stock_index]["value"]
 
         # if ctx.message.author.id not in self.data.money or self.data.money[ctx.message.author.id] < jrery_dollars:
         # not working fixing this tomorrow aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
