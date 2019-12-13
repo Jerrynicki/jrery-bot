@@ -130,7 +130,7 @@ class Capitalism(commands.Cog):
         self.data.money[ctx.message.author.id] += jrery_dollars
         self.data.stocks[stock_index]["investments"][ctx.message.author.id] -= amount
 
-        await ctx.send("You sold **" + str(amount) + " " + name + "** for **" + str(round(jrery_dollars, 5)) + " jrery dollars**")
+        await ctx.send("You sold **" + str(round(amount, 5)) + " " + name + "** for **" + str(round(jrery_dollars, 5)) + " jrery dollars**")
 
         if self.data.stocks[stock_index]["investments"][ctx.message.author.id] == 0:
             del self.data.stocks[stock_index]["investments"][ctx.message.author.id]
@@ -174,7 +174,7 @@ class Capitalism(commands.Cog):
         else:
             self.data.stocks[stock_index]["investments"][ctx.message.author.id] = amount
 
-        await ctx.send("You bought **" + str(amount) + " " + name + "** for **" + str(round(jrery_dollars, 5)) + " jrery dollars**")
+        await ctx.send("You bought **" + str(round(amount, 5)) + " " + name + "** for **" + str(round(jrery_dollars, 5)) + " jrery dollars**")
         self.stocks_changed = True
 
     @stocks.command()
