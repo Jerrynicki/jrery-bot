@@ -22,19 +22,19 @@ Subcommands and explanations:
 
 * **WARNING**: When you delete a stock, everyone's investments will get converted back to jrery dollars at the current value
 
-**invest** name amount
+**buy** name amount
 
-* Invests `amount` jrery dollars in the stock `name`
+* Buys `amount` of the stock `name`
 
 * Use `all` for `amount` to invest all of your jrery dollars
 
-**cashout** name amount
+**sell** name amount
 
-* Cashes out `amount` of stock `name` with the current value
+* Sells `amount` of stock `name` at the current value
 
 * Use `all` for amount to cash out all of your investments on the stock
 
-* Example: `jer!stocks cashout jrery 50` will give you 100 jrery dollars if the value of `jrery` is 2.00 at the time of cashing out
+* Example: `jer!stocks sell jrery 50` will give you 100 jrery dollars if the value of `jrery` is 2.00 at the time of cashing out
 
 **daily**
 

@@ -98,7 +98,7 @@ class Capitalism(commands.Cog):
         self.stocks_changed = True
 
     @stocks.command()
-    async def cashout(self, ctx, name, amount):
+    async def sell(self, ctx, name, amount):
         stock_index = None
         for stock in self.data.stocks:
             if stock["name"] == name:
@@ -138,7 +138,7 @@ class Capitalism(commands.Cog):
         self.stocks_changed = True
 
     @stocks.command()
-    async def invest(self, ctx, name, amount):
+    async def buy(self, ctx, name, amount):
         stock_index = None
         for stock in self.data.stocks:
             if stock["name"] == name:
