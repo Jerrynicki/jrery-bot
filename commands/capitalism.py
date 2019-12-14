@@ -113,7 +113,7 @@ class Capitalism(commands.Cog):
                         investment_amount += jrery_dollars
 
                     self.data.stocks.remove(stock)
-                    await ctx.send("**" + name + "** has been deleted and a total of **" + str(round(investment_amount, 5)) + "** jrery dollars have been payed back to investors.")
+                    await ctx.send("**" + name + "** has been deleted and a total of **" + str(round(investment_amount, 3)) + "** jrery dollars have been payed back to investors.")
 
                     self.stocks_changed = True
                 else:
@@ -156,7 +156,7 @@ class Capitalism(commands.Cog):
         self.data.money[ctx.message.author.id] += jrery_dollars
         self.data.stocks[stock_index]["investments"][ctx.message.author.id] -= amount
 
-        await ctx.send("You sold **" + str(round(amount, 5)) + " " + name + "** for **" + str(round(jrery_dollars, 5)) + " jrery dollars**")
+        await ctx.send("You sold **" + str(round(amount, 3)) + " " + name + "** for **" + str(round(jrery_dollars, 3)) + " jrery dollars**")
 
         if self.data.stocks[stock_index]["investments"][ctx.message.author.id] == 0:
             del self.data.stocks[stock_index]["investments"][ctx.message.author.id]
@@ -200,7 +200,7 @@ class Capitalism(commands.Cog):
         else:
             self.data.stocks[stock_index]["investments"][ctx.message.author.id] = amount
 
-        await ctx.send("You bought **" + str(round(amount, 5)) + " " + name + "** for **" + str(round(jrery_dollars, 5)) + " jrery dollars**")
+        await ctx.send("You bought **" + str(round(amount, 3)) + " " + name + "** for **" + str(round(jrery_dollars, 3)) + " jrery dollars**")
         self.stocks_changed = True
 
     @commands.command()
@@ -230,8 +230,8 @@ class Capitalism(commands.Cog):
                 in_circulation += stock["investments"][investments]
             in_circulation_value = stock["value"] * in_circulation
 
-            message += "**" + stock["name"] + "**" + " - current value: 1 " + stock["name"] + " = **" + str(round(stock["value"], 5)) + "** jrery dollar - **" +\
-                    str(round(in_circulation, 5)) + "** in circulation (=" + str(round(in_circulation_value, 5)) + " jrery dollars) - created by " + stock["creator_name"] + "\n"
+            message += "**" + stock["name"] + "**" + " - current value: 1 " + stock["name"] + " = **" + str(round(stock["value"], 3)) + "** jrery dollar - **" +\
+                    str(round(in_circulation, 3)) + "** in circulation (=" + str(round(in_circulation_value, 3)) + " jrery dollars) - created by " + stock["creator_name"] + "\n"
 
         if len(self.data.stocks) == 0:
             message += "(None)"
@@ -244,11 +244,11 @@ class Capitalism(commands.Cog):
         for stock in self.data.stocks:
             if ctx.message.author.id in stock["investments"]:
                 message += "**" + stock["name"] + "**" + " - current value: 1 " +\
-                        stock["name"] + " = **" + str(round(stock["value"], 5)) +\
+                        stock["name"] + " = **" + str(round(stock["value"], 3)) +\
                         "** jrery dollars - You have **" +\
-                        str(round(stock["investments"][ctx.message.author.id], 5)) +\
+                        str(round(stock["investments"][ctx.message.author.id], 3)) +\
                         "**, currently worth **" +\
-                        str(round(stock["investments"][ctx.message.author.id] * stock["value"], 5)) + "** jrery dollars - created by " + stock["creator_name"] + "\n"
+                        str(round(stock["investments"][ctx.message.author.id] * stock["value"], 3)) + "** jrery dollars - created by " + stock["creator_name"] + "\n"
 
         if message == "**Your stocks:**\n":
             message += "(None)"
