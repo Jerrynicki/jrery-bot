@@ -46,7 +46,7 @@ class Capitalism(commands.Cog):
 
     async def update_stocks(self):
         while True:
-            await asyncio.sleep(120)
+            await asyncio.sleep(20)
             for stock in self.data.stocks:
                 
                 if stock["name"] not in self.events:
@@ -121,8 +121,6 @@ class Capitalism(commands.Cog):
                 return
         await ctx.send("No stocks named **" + name + "** could be found!")
 
-        
-
     @stocks.command()
     async def sell(self, ctx, name, amount):
         stock_index = None
@@ -164,6 +162,46 @@ class Capitalism(commands.Cog):
         self.stocks_changed = True
 
     @stocks.command()
+    async def cashout(self, ctx, name, jrery_dollars):
+        stock_index = None
+        for stock in self.data.stocks:
+            if stock["name"] == name:
+                stock_index = self.data.stocks.index(stock)
+
+        if stock_index == None:
+            await ctx.send("No stock with name **" + name + "** found")
+            return
+
+        if ctx.message.author.id not in self.data.stocks[stock_index]["investments"]:
+            await ctx.send("You don't have any stocks in **" + name + "**")
+            return
+
+        if jrery_dollars == "all":
+            jrery_dollars = self.data.stocks[stock_index]["value"] * self.data.stocks[stock_index]["investments"][ctx.message.author.id]
+        else:
+            try:
+                jrery_dollars = float(jrery_dollars)
+                if jrery_dollars < 0:
+                    raise Exception("fick dich alex")
+            except:
+                await ctx.send("Amount is not a valid number! (Try using . instead of , as a decimal point)")
+
+        if self.data.stocks[stock_index]["investments"][ctx.message.author.id] * self.data.stocks[stock_index]["value"] < jrery_dollars:
+            await ctx.send("You don't have that many stocks in **" + name + "**!")
+            return
+
+        amount = jrery_dollars / self.data.stocks[stock_index]["value"]
+        self.data.money[ctx.message.author.id] += jrery_dollars
+        self.data.stocks[stock_index]["investments"][ctx.message.author.id] -= amount
+
+        await ctx.send("You sold **" + str(round(amount, 3)) + " " + name + "** for **" + str(round(jrery_dollars, 3)) + " jrery dollars**")
+
+        if self.data.stocks[stock_index]["investments"][ctx.message.author.id] == 0:
+            del self.data.stocks[stock_index]["investments"][ctx.message.author.id]
+
+        self.stocks_changed = True
+
+    @stocks.command()
     async def buy(self, ctx, name, amount):
         stock_index = None
         for stock in self.data.stocks:
@@ -175,8 +213,6 @@ class Capitalism(commands.Cog):
             return
 
         if amount == "all":
-            # geht das überhaupt ist mir auch egal keinen bock mehr
-            # macht der jerry von morgen dann
             amount = self.data.money[ctx.message.author.id] / self.data.stocks[stock_index]["value"] 
         else:
             try:
@@ -188,8 +224,42 @@ class Capitalism(commands.Cog):
 
         jrery_dollars = amount * self.data.stocks[stock_index]["value"]
 
-        # if ctx.message.author.id not in self.data.money or self.data.money[ctx.message.author.id] < jrery_dollars:
-        # not working fixing this tomorrow aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        if self.data.money[ctx.message.author.id] < jrery_dollars:
+            await ctx.send("You don't have that many jrery dollars!")
+            return
+
+        self.data.money[ctx.message.author.id] -= jrery_dollars
+        if ctx.message.author.id in self.data.stocks[stock_index]["investments"]:
+            self.data.stocks[stock_index]["investments"][ctx.message.author.id] += amount
+        else:
+            self.data.stocks[stock_index]["investments"][ctx.message.author.id] = amount
+
+        await ctx.send("You bought **" + str(round(amount, 3)) + " " + name + "** for **" + str(round(jrery_dollars, 3)) + " jrery dollars**")
+        self.stocks_changed = True
+
+    @stocks.command()
+    async def invest(self, ctx, name, jrery_dollars):
+        stock_index = None
+        for stock in self.data.stocks:
+            if stock["name"] == name:
+                stock_index = self.data.stocks.index(stock)
+
+        if stock_index == None:
+            await ctx.send("No stock with name **" + name + "** found")
+            return
+
+        if jrery_dollars == "all":
+            jrery_dollars = self.data.money[ctx.message.author.id]
+        else:
+            try:
+                jrery_dollars = float(jrery_dollars)
+                if jrery_dollars < 0:
+                    raise Exception("fick dich alex")
+            except:
+                await ctx.send("Amount is not a valid number! (Try using . instead of , as a decimal point)")
+
+        amount = jrery_dollars / self.data.stocks[stock_index]["value"]
+
         if self.data.money[ctx.message.author.id] < jrery_dollars:
             await ctx.send("You don't have that many jrery dollars!")
             return

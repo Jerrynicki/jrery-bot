@@ -28,13 +28,27 @@ Subcommands and explanations:
 
 * Use `all` for `amount` to invest all of your jrery dollars
 
+**invest** name jrery\_dollars
+
+* Invest `jrery_dollars` into the stock `name`
+
+* Use `all` for `jrery_dollars` to invest all of your jrery dollars
+
 **sell** name amount
 
 * Sells `amount` of stock `name` at the current value
 
 * Use `all` for amount to cash out all of your investments on the stock
 
-* Example: `jer!stocks sell jrery 50` will give you 100 jrery dollars if the value of `jrery` is 2.00 at the time of cashing out
+* Example: `jer!stocks sell jrery 50` will give you 100 jrery dollars if the value of `jrery` is 2.00 at the time of selling
+
+**cashout** name jrery\_dollars
+
+* Sell the amount of `name` required to give back `jrery_dollars` jrery dollars
+
+* Use all for amount to cash out all of your investments on the stock
+
+* Example: `jer!stocks cashout jrery 50` will give you 50 jrery dollars and will sell 25 stock if the value of `jrery` is 2.0 at the time of cashing out
 
 **list**
 
