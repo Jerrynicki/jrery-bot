@@ -105,7 +105,12 @@ class Capitalism(commands.Cog):
     async def stocks(self, ctx):
         """Call this command without any arguments for a full explanation of the stocks system"""
         if ctx.message.content.endswith("stocks"):
-            await ctx.message.author.send(self.stocks_explain.replace("\n\n", "\n"))
+            message = self.stocks_explain.replace("\n\n", "\n").split("\n")
+            for i in range(0, len(message), 10):
+                try:
+                    await ctx.message.author.send("\n".join(message[i:i+10]))
+                except IndexError:
+                    await ctx.message.author.send("\n".join(message[i:]))
             await ctx.send("Sent you a DM")
 
     @stocks.command()
