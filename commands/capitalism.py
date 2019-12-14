@@ -29,6 +29,8 @@ class Capitalism(commands.Cog):
             self.data = StocksData()
             self.stocks_changed = True
 
+        self.events = {} # for storing information about stock events, e.g. one stock only rising over multiple iterations
+
         bot.loop.create_task(self.stocks_autoflush())
         bot.loop.create_task(self.update_stocks())
 
@@ -46,7 +48,21 @@ class Capitalism(commands.Cog):
         while True:
             await asyncio.sleep(120)
             for stock in self.data.stocks:
-                stock["value"] += stock["value"] * (random.randint(-100, 100) / 100 / 100) * 3
+                
+                if stock["name"] not in self.events:
+                    val_change = stock["value"] * (random.randint(-100, 100) / 100 / 100) * 3
+                    stock["value"] += val_change
+
+                    if random.randint(1, 50) == 25:
+                        self.events[stock["name"]] = [random.randint(1, 20), random.randint(-100, 100) / 100 / 100 * 3]
+                                                     # duration of event     # how much the value changes
+
+                else:
+                    self.events[stock["name"]][0] -= 1
+                    stock["value"] += self.events[stock["name"]][1]
+                    if self.events[stock["name"]][0] == 0:
+                        del self.events[stock["name"]]
+
                 if stock["value"] < 0.05:
                     stock["value"] = 0.05
             self.stocks_changed = True
