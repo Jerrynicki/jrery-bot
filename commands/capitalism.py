@@ -46,7 +46,7 @@ class Capitalism(commands.Cog):
 
     async def update_stocks(self):
         while True:
-            await asyncio.sleep(20)
+            await asyncio.sleep(120)
             for stock in self.data.stocks:
                 
                 if stock["name"] not in self.events:
