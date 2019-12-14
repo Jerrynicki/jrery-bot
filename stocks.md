@@ -58,4 +58,6 @@ Subcommands and explanations:
 
 * Gives you a personalized list, showing all the stocks you have invested in, their current value, how many you have and how much they are worth currently
 
-The value of each currency is increased or decreased between -3 to 3 percent (with 2 decimal points) randomly every 2 minutes
+The value of each currency is increased or decreased between -0.03 to 0.03 (changes can be as low as 0.0001) randomly every 2 minutes
+
+"Events" have a 1:50 chance of occuring and will cause a constant value change over 1-20 rounds between -0.05 to 0.05

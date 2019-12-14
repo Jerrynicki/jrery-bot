@@ -50,11 +50,11 @@ class Capitalism(commands.Cog):
             for stock in self.data.stocks:
                 
                 if stock["name"] not in self.events:
-                    val_change = stock["value"] * (random.randint(-100, 100) / 100 / 100) * 3
+                    val_change = random.randint(-100, 100) / 100 / 100 * 3
                     stock["value"] += val_change
 
                     if random.randint(1, 50) == 25:
-                        self.events[stock["name"]] = [random.randint(1, 20), random.randint(-100, 100) / 100 / 100 * 3]
+                        self.events[stock["name"]] = [random.randint(1, 20), random.randint(-100, 100) / 100 / 100 * 5]
                                                      # duration of event     # how much the value changes
 
                 else:
