@@ -58,6 +58,16 @@ Subcommands and explanations:
 
 * Gives you a personalized list, showing all the stocks you have invested in, their current value, how many you have and how much they are worth currently
 
+**notification** stock event threshold
+
+* Notifies you when a stock goes above or below a specific value
+
+* The name of the stock is specified in `stock`
+
+* The type of event is specified in `event` - either "above" or "below"
+
+* The value the stock should be above or below of is specified in `threshold`
+
 The value of each currency is increased or decreased between -0.03 to 0.03 (changes can be as low as 0.0001) randomly every 2 minutes
 
 "Events" have a 1:50 chance of occuring and will cause a constant value change over 1-20 rounds between -0.05 to 0.05

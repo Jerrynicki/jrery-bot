@@ -13,6 +13,7 @@ class StocksData():
         self.money = {} # {author_id: money}
         self.stocks = [] # [{"name": name, "value": value in jrery dollars, "creator_id": id of creator, "creator_name": name#discriminator, "investments": {"investor1_id": amount in stocks}}]
         self.daily_cooldown = {} # {author_id: timestamp when cooldown expires}
+        self.reminders = {} # {id: [(stock, event, threshold)]} # event can be: "below" if stock goes below threshold or "above" if stock goes above threshold
 
 
 class Capitalism(commands.Cog):
@@ -65,6 +66,29 @@ class Capitalism(commands.Cog):
 
                 if stock["value"] < 0.05:
                     stock["value"] = 0.05
+
+                for user in self.data.reminders:
+                    delete = []
+                    for reminder in self.data.reminders[user]:
+                        if reminder[0] == stock["name"]:
+                            try:
+                                if reminder[1] == "above":
+                                    if stock["value"] >= reminder[2]:
+                                        user_ = self.bot.get_user(user)
+                                        await user_.send("Hello " + user_.name + "!\n**" + stock["name"] + "** has just reached a value of **" + str(round(stock["value"], 5)) + "**! Come check it out!")
+                                        delete.append(reminder)
+                                elif reminder[1] == "below":
+                                    if stock["value"] <= reminder[2]:
+                                        user_ = self.bot.get_user(user)
+                                        await user_.send("Hello " + user_.name + "!\n**" + stock["name"] + "** has just reached a value of **" + str(round(stock["value"], 5)) + "**! Come check it out!")
+                                        delete.append(reminder)
+                            except Exception as exc:
+                                print(exc)
+                                delete.append(reminder)
+                    for x in delete:
+                        self.data.reminders[user].remove(x)
+                                        
+
             self.stocks_changed = True
 
     @commands.command()
@@ -324,3 +348,30 @@ class Capitalism(commands.Cog):
             message += "(None)"
 
         await ctx.send(message)
+
+    @stocks.command()
+    async def notification(self, ctx, stock, event, threshold):
+        if event not in ("above", "below"):
+            await ctx.send("Event type not recognized. Try jer!stocks to get an explanation of the stocks system.")
+            return
+        try:
+            threshold = float(threshold)
+        except Exception:
+            await ctx.send("Threshold is not a valid number. (Try using . for the decimal point instead of ,)")
+            return
+
+        stock_exists = False
+        for stock_ in self.data.stocks:
+            if stock_["name"] == stock:
+                stock_exists = True
+                break
+
+        if not stock_exists:
+            await ctx.send("This stock doesn't exist!")
+            return
+
+        if ctx.message.author.id not in self.data.reminders:
+            self.data.reminders[ctx.message.author.id] = []
+        self.data.reminders[ctx.message.author.id].append((stock, event, threshold))
+
+        await ctx.send("I will notify you when the value of **" + stock_["name"] + "** goes " + event + " **" + str(round(threshold, 5)) + "**")
