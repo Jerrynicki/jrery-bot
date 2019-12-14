@@ -300,7 +300,7 @@ class Capitalism(commands.Cog):
                 in_circulation += stock["investments"][investments]
             in_circulation_value = stock["value"] * in_circulation
 
-            message += "**" + stock["name"] + "**" + " - current value: 1 " + stock["name"] + " = **" + str(round(stock["value"], 3)) + "** jrery dollar - **" +\
+            message += "**" + stock["name"] + "**" + " - current value: 1 " + stock["name"] + " = **" + str(round(stock["value"], 3)) + "** jrery dollars - **" +\
                     str(round(in_circulation, 3)) + "** in circulation (=" + str(round(in_circulation_value, 3)) + " jrery dollars) - created by " + stock["creator_name"] + "\n"
 
         if len(self.data.stocks) == 0:
