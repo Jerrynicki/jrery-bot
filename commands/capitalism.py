@@ -193,7 +193,7 @@ class Capitalism(commands.Cog):
         await ctx.send("You bought **" + str(round(amount, 5)) + " " + name + "** for **" + str(round(jrery_dollars, 5)) + " jrery dollars**")
         self.stocks_changed = True
 
-    @stocks.command()
+    @commands.command()
     async def daily(self, ctx):
         tm = time.time()
         if ctx.message.author.id in self.data.daily_cooldown:

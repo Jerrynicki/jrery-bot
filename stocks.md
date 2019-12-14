@@ -4,7 +4,7 @@ The stocks system in jrery bot works kind of similar to stocks in the real world
 
 All of the commands are subcommands of jer!stocks, so you can use them by sending `jer!stocks subcommand arg1 arg2 ...`
 
-You can see your jrery dollars by using jer!money
+You can see your jrery dollars by using jer!money and get 100 free jrery dollars every 24h with jer!daily
 
 Subcommands and explanations:
 
@@ -35,12 +35,6 @@ Subcommands and explanations:
 * Use `all` for amount to cash out all of your investments on the stock
 
 * Example: `jer!stocks sell jrery 50` will give you 100 jrery dollars if the value of `jrery` is 2.00 at the time of cashing out
-
-**daily**
-
-* Will give you 100 free jrery dollars
-
-* Can only be used once every 24 hours
 
 **list**
 
