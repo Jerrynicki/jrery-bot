@@ -105,13 +105,23 @@ class Capitalism(commands.Cog):
         for stock in stocks:
             if stock["name"] == name:
                 if stock["creator_id"] == ctx.message.author.id:
+                    investment_amount = 0
+                    value = stock["value"]
+                    for id in stock["investments"]:
+                        jrery_dollars = stock["investments"][id] * value
+                        self.data.money[id] += jrery_dollars
+                        investment_amount += jrery_dollars
+
                     self.data.stocks.remove(stock)
-                    await ctx.send("**" + name + "** has been deleted")
+                    await ctx.send("**" + name + "** has been deleted and a total of **" + str(round(investment_amount, 5)) + "** jrery dollars have been payed back to investors.")
+
+                    self.stocks_changed = True
                 else:
                     await ctx.send("You can only delete stocks owned by yoursel!")
                 return
         await ctx.send("No stocks named **" + name + "** could be found!")
-        self.stocks_changed = True
+
+        
 
     @stocks.command()
     async def sell(self, ctx, name, amount):
@@ -215,7 +225,13 @@ class Capitalism(commands.Cog):
     async def list(self, ctx):
         message = "**All stocks registered on this bot:**\n"
         for stock in self.data.stocks:
-            message += "**" + stock["name"] + "**" + " - current value: 1 " + stock["name"] + " = **" + str(round(stock["value"], 5)) + "** jrery dollar - created by " + stock["creator_name"] + "\n"
+            in_circulation = 0
+            for investments in stock["investments"]:
+                in_circulation += stock["investments"][investments]
+            in_circulation_value = stock["value"] * in_circulation
+
+            message += "**" + stock["name"] + "**" + " - current value: 1 " + stock["name"] + " = **" + str(round(stock["value"], 5)) + "** jrery dollar - **" +\
+                    str(round(in_circulation, 5)) + "** in circulation (=" + str(round(in_circulation_value, 5)) + " jrery dollars) - created by " + stock["creator_name"] + "\n"
 
         if len(self.data.stocks) == 0:
             message += "(None)"
