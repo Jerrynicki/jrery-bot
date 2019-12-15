@@ -54,8 +54,7 @@ class Capitalism(commands.Cog):
                     val_change = random.randint(-100, 100) / 100 / 100 * 5
                     stock["value"] += val_change
 
-                    # if random.randint(1, 50) == 25:
-                    if 1 == 1:
+                    if random.randint(1, 50) == 25:
                         self.events[stock["name"]] = [random.randint(1, 20), random.randint(-100, 100) / 100 / 100 * 10]
                                                      # duration of event     # how much the value changes
 
