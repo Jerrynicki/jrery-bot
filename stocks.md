@@ -64,10 +64,16 @@ Subcommands and explanations:
 
 * The name of the stock is specified in `stock`
 
-* The type of event is specified in `event` - either "above" or "below"
+* The type of event is specified in `event` - either "above", "below" or "event"
 
 * The value the stock should be above or below of is specified in `threshold`
 
-The value of each currency is increased or decreased between -0.03 to 0.03 (changes can be as low as 0.0001) randomly every 2 minutes
+* When the event is "event", you will be notified when an event with the stock happens. No value for `threshold` is necessary
 
-"Events" have a 1:50 chance of occuring and will cause a constant value change over 1-20 rounds between -0.05 to 0.05
+**events**
+
+* Lists current ongoing events
+
+The value of each currency is increased or decreased between -0.05 to 0.05 (changes can be as low as 0.0001) randomly every 2 minutes
+
+"Events" have a 1:50 chance of occuring and will cause a constant value change over 1-20 rounds between -0.1 to 0.1

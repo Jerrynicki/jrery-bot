@@ -51,11 +51,12 @@ class Capitalism(commands.Cog):
             for stock in self.data.stocks:
                 
                 if stock["name"] not in self.events:
-                    val_change = random.randint(-100, 100) / 100 / 100 * 3
+                    val_change = random.randint(-100, 100) / 100 / 100 * 5
                     stock["value"] += val_change
 
-                    if random.randint(1, 50) == 25:
-                        self.events[stock["name"]] = [random.randint(1, 20), random.randint(-100, 100) / 100 / 100 * 5]
+                    # if random.randint(1, 50) == 25:
+                    if 1 == 1:
+                        self.events[stock["name"]] = [random.randint(1, 20), random.randint(-100, 100) / 100 / 100 * 10]
                                                      # duration of event     # how much the value changes
 
                 else:
@@ -81,6 +82,11 @@ class Capitalism(commands.Cog):
                                     if stock["value"] <= reminder[2]:
                                         user_ = self.bot.get_user(user)
                                         await user_.send("Hello " + user_.name + "!\n**" + stock["name"] + "** has just reached a value of **" + str(round(stock["value"], 5)) + "**! Come check it out!")
+                                        delete.append(reminder)
+                                elif reminder[1] == "event":
+                                    if stock["name"] in self.events:
+                                        user_ = self.bot.get_user(user)
+                                        await user_.send("Hello " + user_.name + "!\n**" + stock["name"] + "** is currently undergoing an event! (**" + str(round(self.events[stock["name"]][1], 5)) + "** per round for **" + str(self.events[stock["name"]][0]) + "** rounds)\nCome check it out!")
                                         delete.append(reminder)
                             except Exception as exc:
                                 print(exc)
@@ -355,8 +361,8 @@ class Capitalism(commands.Cog):
         await ctx.send(message)
 
     @stocks.command()
-    async def notification(self, ctx, stock, event, threshold):
-        if event not in ("above", "below"):
+    async def notification(self, ctx, stock, event, threshold=0):
+        if event not in ("above", "below", "event"):
             await ctx.send("Event type not recognized. Try jer!stocks to get an explanation of the stocks system.")
             return
         try:
@@ -379,4 +385,20 @@ class Capitalism(commands.Cog):
             self.data.reminders[ctx.message.author.id] = []
         self.data.reminders[ctx.message.author.id].append((stock, event, threshold))
 
-        await ctx.send("I will notify you when the value of **" + stock_["name"] + "** goes " + event + " **" + str(round(threshold, 5)) + "**")
+        if event != "event":
+            await ctx.send("I will notify you when the value of **" + stock_["name"] + "** goes " + event + " **" + str(round(threshold, 5)) + "**")
+        else:
+            await ctx.send("I will notify you when an event with **" + stock_["name"] + "** happens")
+
+    @stocks.command()
+    async def events(self, ctx):
+        message = "**Current ongoing events:**\n"
+
+        for event in self.events:
+            message += "**" + event + "** | **" + str(round(self.events[event][1], 5)) + "** per round | **" + str(self.events[event][0]) + "** rounds left\n"
+
+        if len(self.events) == 0:
+            message += "(None)"
+
+        await ctx.send(message)
+
