@@ -360,37 +360,34 @@ class Capitalism(commands.Cog):
         await ctx.send(message)
 
     @stocks.command()
-    async def notification(self, ctx, stock, event, threshold=0):
+    async def notification(self, ctx, stock, event, threshold="0"):
+        if event not in ("above", "below", "event"):
+            await ctx.send("Event type not recognized. Try jer!stocks to get an explanation of the stocks system.")
+            return
         try:
-            if event not in ("above", "below", "event"):
-                await ctx.send("Event type not recognized. Try jer!stocks to get an explanation of the stocks system.")
-                return
-            try:
-                threshold = float(threshold)
-            except Exception:
-                await ctx.send("Threshold is not a valid number. (Try using . for the decimal point instead of ,)")
-                return
+            threshold = float(threshold)
+        except Exception:
+            await ctx.send("Threshold is not a valid number. (Try using . for the decimal point instead of ,)")
+            return
 
-            stock_exists = False
-            for stock_ in self.data.stocks:
-                if stock_["name"] == stock:
-                    stock_exists = True
-                    break
+        stock_exists = False
+        for stock_ in self.data.stocks:
+            if stock_["name"] == stock:
+                stock_exists = True
+                break
 
-            if not stock_exists:
-                await ctx.send("This stock doesn't exist!")
-                return
+        if not stock_exists:
+            await ctx.send("This stock doesn't exist!")
+            return
 
-            if ctx.message.author.id not in self.data.reminders:
-                self.data.reminders[ctx.message.author.id] = []
-            self.data.reminders[ctx.message.author.id].append((stock, event, threshold))
+        if ctx.message.author.id not in self.data.reminders:
+            self.data.reminders[ctx.message.author.id] = []
+        self.data.reminders[ctx.message.author.id].append((stock, event, threshold))
 
-            if event != "event":
-                await ctx.send("I will notify you when the value of **" + stock_["name"] + "** goes " + event + " **" + str(round(threshold, 5)) + "**")
-            else:
-                await ctx.send("I will notify you when an event with **" + stock_["name"] + "** happens")
-        except Exception as exc:
-            await ctx.send(str(exc))
+        if event != "event":
+            await ctx.send("I will notify you when the value of **" + stock_["name"] + "** goes " + event + " **" + str(round(threshold, 5)) + "**")
+        else:
+            await ctx.send("I will notify you when an event with **" + stock_["name"] + "** happens")
 
     @stocks.command()
     async def events(self, ctx):
