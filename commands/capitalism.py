@@ -100,6 +100,8 @@ class Capitalism(commands.Cog):
     async def money(self, ctx, *user: discord.User):
         if len(user) == 0:
             user = ctx.message.author
+        else:
+            user = user[0]
 
         message = ""
 
