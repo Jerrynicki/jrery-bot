@@ -101,10 +101,23 @@ class Capitalism(commands.Cog):
         if len(user) == 0:
             user = ctx.message.author
 
+        message = ""
+
+        money = 0
+        networth = 0
+        for stock in self.data.stocks:
+            if user.id in stock["investments"]:
+                networth += stock["value"] * stock["investments"][user.id]
+
         if user.id in self.data.money:
-            await ctx.send(user.name + " currently has **" + str(round(self.data.money[user.id], 2)) + "** jrery dollars")
-        else:
-            await ctx.send(user.name + " currently has **0** jrery dollars")
+            money = self.data.money[user.id]
+
+        networth += money
+
+        message += user.name + " currently has **" + str(round(money, 2)) + "** jrery dollars"
+        message += "\nCurrent net worth: **" + str(round(networth, 2)) + "** jrery dollars"
+
+        await ctx.send(message)
 
     @commands.group()
     async def stocks(self, ctx):
