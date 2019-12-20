@@ -121,6 +121,22 @@ class Capitalism(commands.Cog):
 
         await ctx.send(message)
 
+    @commands.command()
+    async def pay(self, ctx, user: discord.User, amount: float):
+        if ctx.message.author.id not in self.data.money or self.data.money[ctx.message.author.id] < amount:
+            await ctx.send("You don't have that much money!")
+            return
+
+        self.data.money[ctx.message.author.id] -= amount
+        if user.id in self.data.money:
+            self.data.money[user.id] += amount
+        else:
+            self.data.money[user.id] = amount
+
+        await ctx.send("**" + str(amount) + "** jrery dollars have been transferred to " + user.name + "'s account")
+
+        self.stocks_changed = True
+
     @commands.group()
     async def stocks(self, ctx):
         """Call this command without any arguments for a full explanation of the stocks system"""
