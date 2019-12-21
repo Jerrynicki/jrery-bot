@@ -75,17 +75,17 @@ class Capitalism(commands.Cog):
                                 if reminder[1] == "above":
                                     if stock["value"] >= reminder[2]:
                                         user_ = self.bot.get_user(user)
-                                        await user_.send("Hello " + user_.name + "!\n**" + stock["name"] + "** has just reached a value of **" + str(round(stock["value"], 5)) + "**! Come check it out!")
+                                        await user_.send("Hello " + user_.name + "!\n**" + stock["name"] + "** has just reached a value of **" + str("{:,}".format(round(stock["value"], 5))) + "**! Come check it out!")
                                         delete.append(reminder)
                                 elif reminder[1] == "below":
                                     if stock["value"] <= reminder[2]:
                                         user_ = self.bot.get_user(user)
-                                        await user_.send("Hello " + user_.name + "!\n**" + stock["name"] + "** has just reached a value of **" + str(round(stock["value"], 5)) + "**! Come check it out!")
+                                        await user_.send("Hello " + user_.name + "!\n**" + stock["name"] + "** has just reached a value of **" + str("{:,}".format(round(stock["value"], 5))) + "**! Come check it out!")
                                         delete.append(reminder)
                                 elif reminder[1] == "event":
                                     if stock["name"] in self.events:
                                         user_ = self.bot.get_user(user)
-                                        await user_.send("Hello " + user_.name + "!\n**" + stock["name"] + "** is currently undergoing an event! (**" + str(round(self.events[stock["name"]][1], 5)) + "** per round for **" + str(self.events[stock["name"]][0]) + "** rounds)\nCome check it out!")
+                                        await user_.send("Hello " + user_.name + "!\n**" + stock["name"] + "** is currently undergoing an event! (**" + str("{:,}".format(round(self.events[stock["name"]][1], 5))) + "** per round for **" + str(self.events[stock["name"]][0]) + "** rounds)\nCome check it out!")
                                         delete.append(reminder)
                             except Exception as exc:
                                 print(exc)
@@ -116,8 +116,8 @@ class Capitalism(commands.Cog):
 
         networth += money
 
-        message += user.name + " currently has **" + str(round(money, 2)) + "** jrery dollars"
-        message += "\nCurrent net worth: **" + str(round(networth, 2)) + "** jrery dollars"
+        message += user.name + " currently has **" + str("{:,}".format(round(money, 2))) + "** jrery dollars"
+        message += "\nCurrent net worth: **" + str("{:,}".format(round(networth, 2))) + "** jrery dollars"
 
         await ctx.send(message)
 
@@ -178,7 +178,7 @@ class Capitalism(commands.Cog):
                         investment_amount += jrery_dollars
 
                     self.data.stocks.remove(stock)
-                    await ctx.send("**" + name + "** has been deleted and a total of **" + str(round(investment_amount, 3)) + "** jrery dollars have been payed back to investors.")
+                    await ctx.send("**" + name + "** has been deleted and a total of **" + str("{:,}".format(round(investment_amount, 3))) + "** jrery dollars have been payed back to investors.")
 
                     self.stocks_changed = True
                 else:
@@ -219,7 +219,7 @@ class Capitalism(commands.Cog):
         self.data.money[ctx.message.author.id] += jrery_dollars
         self.data.stocks[stock_index]["investments"][ctx.message.author.id] -= amount
 
-        await ctx.send("You sold **" + str(round(amount, 3)) + " " + name + "** for **" + str(round(jrery_dollars, 3)) + " jrery dollars**")
+        await ctx.send("You sold **" + str("{:,}".format(round(amount, 3))) + " " + name + "** for **" + str("{:,}".format(round(jrery_dollars, 3))) + " jrery dollars**")
 
         if self.data.stocks[stock_index]["investments"][ctx.message.author.id] == 0:
             del self.data.stocks[stock_index]["investments"][ctx.message.author.id]
@@ -259,7 +259,7 @@ class Capitalism(commands.Cog):
         self.data.money[ctx.message.author.id] += jrery_dollars
         self.data.stocks[stock_index]["investments"][ctx.message.author.id] -= amount
 
-        await ctx.send("You sold **" + str(round(amount, 3)) + " " + name + "** for **" + str(round(jrery_dollars, 3)) + " jrery dollars**")
+        await ctx.send("You sold **" + str("{:,}".format(round(amount, 3))) + " " + name + "** for **" + str("{:,}".format(round(jrery_dollars, 3))) + " jrery dollars**")
 
         if self.data.stocks[stock_index]["investments"][ctx.message.author.id] == 0:
             del self.data.stocks[stock_index]["investments"][ctx.message.author.id]
@@ -299,7 +299,7 @@ class Capitalism(commands.Cog):
         else:
             self.data.stocks[stock_index]["investments"][ctx.message.author.id] = amount
 
-        await ctx.send("You bought **" + str(round(amount, 3)) + " " + name + "** for **" + str(round(jrery_dollars, 3)) + " jrery dollars**")
+        await ctx.send("You bought **" + str("{:,}".format(round(amount, 3))) + " " + name + "** for **" + str("{:,}".format(round(jrery_dollars, 3))) + " jrery dollars**")
         self.stocks_changed = True
 
     @stocks.command()
@@ -335,7 +335,7 @@ class Capitalism(commands.Cog):
         else:
             self.data.stocks[stock_index]["investments"][ctx.message.author.id] = amount
 
-        await ctx.send("You bought **" + str(round(amount, 3)) + " " + name + "** for **" + str(round(jrery_dollars, 3)) + " jrery dollars**")
+        await ctx.send("You bought **" + str("{:,}".format(round(amount, 3))) + " " + name + "** for **" + str("{:,}".format(round(jrery_dollars, 3))) + " jrery dollars**")
         self.stocks_changed = True
 
     @commands.command()
@@ -365,8 +365,8 @@ class Capitalism(commands.Cog):
                 in_circulation += stock["investments"][investments]
             in_circulation_value = stock["value"] * in_circulation
 
-            message += "**" + stock["name"] + "**" + " - current value: 1 " + stock["name"] + " = **" + str(round(stock["value"], 3)) + "** jrery dollars - **" +\
-                    str(round(in_circulation, 3)) + "** in circulation (=" + str(round(in_circulation_value, 3)) + " jrery dollars) - created by " + stock["creator_name"] + "\n"
+            message += "**" + stock["name"] + "**" + " - current value: 1 " + stock["name"] + " = **" + str("{:,}".format(round(stock["value"], 3))) + "** jrery dollars - **" +\
+                    str("{:,}".format(round(in_circulation, 3))) + "** in circulation (=" + str("{:,}".format(round(in_circulation_value, 3))) + " jrery dollars) - created by " + stock["creator_name"] + "\n"
 
         if len(self.data.stocks) == 0:
             message += "(None)"
@@ -379,11 +379,11 @@ class Capitalism(commands.Cog):
         for stock in self.data.stocks:
             if ctx.message.author.id in stock["investments"]:
                 message += "**" + stock["name"] + "**" + " - current value: 1 " +\
-                        stock["name"] + " = **" + str(round(stock["value"], 3)) +\
+                        stock["name"] + " = **" + str("{:,}".format(round(stock["value"], 3))) +\
                         "** jrery dollars - You have **" +\
-                        str(round(stock["investments"][ctx.message.author.id], 3)) +\
+                        str("{:,}".format(round(stock["investments"][ctx.message.author.id], 3))) +\
                         "**, currently worth **" +\
-                        str(round(stock["investments"][ctx.message.author.id] * stock["value"], 3)) + "** jrery dollars - created by " + stock["creator_name"] + "\n"
+                        str("{:,}".format(round(stock["investments"][ctx.message.author.id] * stock["value"], 3))) + "** jrery dollars - created by " + stock["creator_name"] + "\n"
 
         if message == "**Your stocks:**\n":
             message += "(None)"
@@ -416,7 +416,7 @@ class Capitalism(commands.Cog):
         self.data.reminders[ctx.message.author.id].append((stock, event, threshold))
 
         if event != "event":
-            await ctx.send("I will notify you when the value of **" + stock_["name"] + "** goes " + event + " **" + str(round(threshold, 5)) + "**")
+            await ctx.send("I will notify you when the value of **" + stock_["name"] + "** goes " + event + " **" + str("{:,}".format(round(threshold, 5))) + "**")
         else:
             await ctx.send("I will notify you when an event with **" + stock_["name"] + "** happens")
 
@@ -425,7 +425,7 @@ class Capitalism(commands.Cog):
         message = "**Current ongoing events:**\n"
 
         for event in self.events:
-            message += "**" + event + "** | **" + str(round(self.events[event][1], 5)) + "** per round | **" + str(self.events[event][0]) + "** rounds left\n"
+            message += "**" + event + "** | **" + str("{:,}".format(round(self.events[event][1], 5))) + "** per round | **" + str(self.events[event][0]) + "** rounds left\n"
 
         if len(self.events) == 0:
             message += "(None)"
