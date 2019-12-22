@@ -151,6 +151,7 @@ class Capitalism(commands.Cog):
 
     @stocks.command()
     async def create(self, ctx, name):
+        name = name.replace("@", "(a)")
         for stock in self.data.stocks:
             if stock["creator_id"] == ctx.message.author.id:
                 await ctx.send("You have already created a stock! Please delete it if you want to create another one")
