@@ -41,7 +41,7 @@ class FFmpeg(commands.Cog):
                 file.write(buffer)
 
         proc_command = ["ffmpeg"]
-        proc_command.extend(["-i", filename1])
+        proc_command.extend(["-y", "-i", filename1])
         proc_command.extend(command[1:-1])
         proc_command.append(filename2)
         proc = subprocess.Popen(
