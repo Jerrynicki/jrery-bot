@@ -8,7 +8,7 @@ class OnMessageEvent(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if random.randint(1, 1500) == 750 and not message.server.id == 547866280049508352:
+        """if random.randint(1, 1500) == 750 and not message.server.id == 547866280049508352:
             trogi_emote = None
             for emote in message.guild.emojis:
                 print(emote.name)
@@ -19,4 +19,5 @@ class OnMessageEvent(commands.Cog):
                 return
 
             await message.channel.send("<:" + trogi_emote.name + ":" + str(trogi_emote.id) + ">")
-            return
+            return"""
+        return
