@@ -17,9 +17,11 @@ generic_responses = json.load(open("commands/generic_reponses.json"))
 if os.path.isdir("cache"):
     for file in os.listdir("cache"):
         os.unlink("cache/" + file)
-
 else:
     os.mkdir("cache")
+
+if not os.path.isdir("user_data"):
+    os.mkdir("user_data")
 
 timeouts = touts.Timeouts()
 
