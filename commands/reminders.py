@@ -56,15 +56,18 @@ class Reminders(commands.Cog):
                         user = self.bot.get_user(reminder[0])
                         user_dm = await user.create_dm()
 
-                        await user_dm.send("привет. you wanted me to remind you of:\n```" + reminder[2] + "```")
+                        if len(reminder) == 3: # old reminders without a message link
+                            await user_dm.send("привет. you wanted me to remind you of:\n```" + reminder[2] + "```(no message link available)")
+                        else:
+                            await user_dm.send("привет. you wanted me to remind you of:\n```" + reminder[2] + "```https://discordapp.com/channels/" + reminder[3])
 
                         self.reminders.remove(reminder)
                         self.reminders_changed = True
                 except:
                     pass
 
-    def add_reminder(self, user, timestamp, text):
-        self.reminders.append([user, timestamp, text])
+    def add_reminder(self, user, timestamp, text, link):
+        self.reminders.append([user, timestamp, text, link])
         self.reminders_changed = True
 
     def get_reminders(self, user):
@@ -107,7 +110,7 @@ class Reminders(commands.Cog):
 
             current_time = int(time_module.time())
             i = 0
-            message = "**Due to me messing something up with the bot, all reminders set before 2019-12-09 have been lost. Sorry doods**\n**Reminders for " + user.name + "**\n"
+            message = "**Reminders for " + user.name + "**\n"
             for reminder in reminders_list:
                 message += "**[" + str(i) + "]**" + " in " + util.time_calc.time_period_human_readable(reminder[0] - current_time) + " `" + reminder[1] + "`\n"
                 i += 1
@@ -174,7 +177,9 @@ class Reminders(commands.Cog):
                 await ctx.send("This user has blocked you from creating reminders for them!")
                 return
 
-            self.add_reminder(user.id, timestamp, message)
+            link = str(ctx.message.guild.id) + "/" + str(ctx.message.channel.id) + "/" + str(ctx.message.id)
+
+            self.add_reminder(user.id, timestamp, message, link)
 
             if offset_args:
                 await ctx.send("я буду remind " + user.name)
