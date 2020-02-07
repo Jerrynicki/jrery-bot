@@ -29,7 +29,7 @@ class Streets(commands.Cog):
     def refresh_search_cache(self):
         self.logger.info("Refreshing image cache...")
         
-        if self.bot.is_debug:
+        if 1 == 1:
             self.logger.info("Debugging is on, not downloading image cache.")
             return
 
