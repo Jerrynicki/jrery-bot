@@ -50,6 +50,7 @@ class FFmpeg(commands.Cog):
             proc.communicate(timeout=20)
         except:
             await ctx.send("FFmpeg command timed out")
+            proc.kill()
             return
 
         await ctx.send(content="", file=discord.File(filename2))
