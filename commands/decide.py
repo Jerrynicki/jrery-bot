@@ -15,8 +15,16 @@ class Decide(commands.Cog):
         choices = choices.split("|")
 
         if len(choices) == 1:
-            await ctx.send("brudi du musst die optionen mit | trennen\nalso so jer!decide flexis|janos")
+            try:
+                choices = int(choices[0])
+            except:
+                await ctx.send("brudi du musst die optionen mit | trennen\nalso so jer!decide flexis|janos\noder gib ne zahl an dann geht auch")
+                return
 
-        choice = random.choice(choices)
+            choice = str(random.randint(1, choices))
+
+        else:
+            choice = random.choice(choices)
+
         await ctx.send("jrery bot sagt **" + choice.replace("**", "\\*\\*") + "**")
 
