@@ -91,6 +91,7 @@ class Reminders(commands.Cog):
         remind [@user] [time] [message] will set a reminder for another user
         remind list will send a message with a list of set reminders
         remind list [@user] will send a message with a list of set reminders for the mentioned user
+        remind remove [id] will remove the specified reminder
         remind blocklist will send a message with a list of blocked users (who can't set reminders for you)
         remind blocklist add [@user] will add a user to your blocklist
         remind blocklist remove [@user] will remove a user from your blocklist"""
@@ -154,6 +155,14 @@ class Reminders(commands.Cog):
                     message += "**" + username + "** (" + str(blocked) + ")\n"
 
                 await ctx.send(message)
+
+        elif time == "remove":
+            eyedee = int(message[0])
+            reminders = self.get_reminders(ctx.message.author.id)
+            reminder = reminders[eyedee]
+            self.reminders.remove([ctx.message.author.id, *reminder])
+            self.reminders_changed = True
+            await ctx.send("Removed reminder #" + str(eyedee))
 
         else:
             if len(ctx.message.mentions) > 0 and time.startswith("<@"):
