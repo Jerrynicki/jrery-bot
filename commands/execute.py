@@ -15,4 +15,4 @@ class Exec(commands.Cog):
 
         stuff = " ".join(stuff)
 
-        await eval(stuff)
+        exec(stuff)
