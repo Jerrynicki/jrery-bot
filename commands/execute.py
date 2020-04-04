@@ -1,4 +1,5 @@
 import discord
+import inspect
 import discord.ext.commands as commands
 
 class Exec(commands.Cog):
@@ -15,4 +16,8 @@ class Exec(commands.Cog):
 
         stuff = " ".join(stuff)
 
-        exec(stuff)
+        result = eval(stuff)
+        if inspect.isawaitable(result):
+            await bot.say(await res)
+        else:
+            await box.say(res)
