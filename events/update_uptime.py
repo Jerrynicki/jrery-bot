@@ -23,6 +23,8 @@ class SaveUptime(commands.Cog):
         await self.bot.get_channel(652606510257537035).send("hello ladies i am back\nwas down for: " + util.time_calc.time_period_human_readable(time.time() - tm))
 
     async def save_uptime(self):
+        await self.bot.wait_until_ready()
+        await asyncio.sleep(15)
         while True:
             await asyncio.sleep(1.5)
             file = open("uptime", "w")
