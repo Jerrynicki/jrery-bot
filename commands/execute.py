@@ -10,6 +10,7 @@ class Exec(commands.Cog):
 
     @commands.command()
     async def ihwell(self, ctx, *stuff):
+        print(ctx.message.author.id != self.bot.owner_id)
         if ctx.message.author.id != self.bot.owner_id:
             await ctx.send("lol no")
             return
