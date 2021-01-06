@@ -20,12 +20,12 @@ class Quotes(commands.Cog):
         """A random quote from an AI fed with my messages
         from the supermarkt server"""
 
-        if len(lines) == 0 or len(lines) > 7:
+        if len(lines) == 0:
             lines = [1]
 
         lines = lines[0]
 
-        if lines > 0:
+        if lines > 0 and lines < 8:
             quote = ""
             starting_point = random.randint(0, len(self.quotes))
             for x in range(lines):
