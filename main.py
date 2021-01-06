@@ -24,16 +24,15 @@ if not os.path.isdir("user_data"):
     os.mkdir("user_data")
 
 timeouts = touts.Timeouts()
-kommusnism = commands.kommusnism.Kommusnism()
 
 bot = discord.ext.commands.Bot(
     command_prefix=config["prefix"], description="hello ladies")
 bot.owner_id = config["owner_id"]
-bot.is_debug = False 
+bot.is_debug = False
 
 bot.add_cog(events.update_uptime.UpdateUptime(bot))
-bot.add_cog(events.on_message.OnMessageEvent(bot, kommusnism))
-bot.add_cog(events.on_message.OnMessageDeleteEvent(bot, kommusnism))
+bot.add_cog(events.on_message.OnMessageEvent(bot))
+bot.add_cog(events.on_message.OnMessageDeleteEvent(bot))
 
 bot.add_cog(commands.generic.Generic(bot, timeouts, generic_responses))
 bot.add_cog(commands.inspirobot.Inspirobot(bot, timeouts, generic_responses))
@@ -50,6 +49,7 @@ bot.add_cog(commands.minecraft.Minecraft(bot, timeouts, generic_responses))
 bot.add_cog(commands.decide.Decide(bot, timeouts, generic_responses))
 bot.add_cog(commands.version.Version(bot, timeouts, generic_responses))
 bot.add_cog(commands.capitalism.Capitalism(bot, timeouts, generic_responses))
+bot.add_cog(commands.quotes.Quotes(bot, timeouts, generic_responses))
 
 try:
     bot.last_up = int(open("uptime", "r").read())
